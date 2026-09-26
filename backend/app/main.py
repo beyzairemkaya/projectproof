@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.models import AnalyzeRequest, ClaimResult, Evidence, EvidenceStatus
 from app.probes.latency_probe import run_latency_probe
@@ -11,6 +12,14 @@ app = FastAPI(
     title="ProjectProof",
     description="Evidence layer for early-stage web projects.",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
